@@ -29,8 +29,7 @@ router.put( '/:id', [
     ],
     actualizarUsuarios 
 );
-//borrar usuario
+//todo borrar usuario
 router.delete( '/:id', [validarJWT,validarADMIN_ROLE],borrarUsuario);
-
 
 module.exports = router;
