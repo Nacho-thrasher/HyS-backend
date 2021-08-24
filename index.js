@@ -25,12 +25,21 @@ console.log(process.env)
 
 //rutas
 app.use('/api/usuarios', require('./routes/usuarios'));
+app.use('/api/usuario', require('./routes/usuarios'));
 app.use('/api/empresas', require('./routes/empresas'));
+app.use('/api/empresa', require('./routes/empresas'));
 app.use('/api/extintores', require('./routes/extintores'));
+app.use('/api/extintores_excel', require('./routes/extintores'));
 app.use('/api/extintor', require('./routes/extintores'));
 app.use('/api/login', require('./routes/auth'));
 app.use('/api/todo', require('./routes/busquedas'));
 app.use('/api/upload', require('./routes/uploads'));
+app.use('/api/upload2', require('./routes/uploads2'));
+
+//pincipal
+app.use('/api/vista-empresas', require('./routes/vista-empresas'));
+app.use('/api/vista-extintor', require('./routes/vista-extintor'));
+
 
 // lo ultimo 
 app.get('*', (req, res) => {

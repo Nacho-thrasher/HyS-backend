@@ -14,6 +14,9 @@ const EmpresaSchema = Schema({
     localidad: {
         type: String
     },
+    nroExtintores: {
+        type: String
+    },
     // sucursales agregar
     usuario:{
         require: true,

@@ -4,7 +4,7 @@ const Extintor = require('../models/extintor');
 const getExtintores = async(req, res = response) => {
 
     const extintores = await Extintor.find()
-    .populate('empresa usuario', 'nombre') ; 
+    .populate('empresa usuario', 'nombre'); 
     res.json({
         ok: true,
         extintores
@@ -28,7 +28,7 @@ const crearExtintores = async(req, res = response) => {
     } catch (error) {
         res.status(500).json({
             ok: false,
-            msg: 'error habla con el admin'
+            msg: 'error habla con el admin' + error.message
         })
     }
     
@@ -82,7 +82,7 @@ const getExtintorById = async(req, res = response) => {
     try {
         
         const extintores = await Extintor.findById(id)
-        .populate('empresa usuario', 'nombre img') ; 
+        .populate('empresa usuario', 'nombre img'); 
         res.json({
             ok: true,
             extintores

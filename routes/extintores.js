@@ -44,4 +44,6 @@ router.delete( '/:id', validarJWT, borrarExtintores);
 router.get( '/:id', validarJWT, getExtintorById);
 
 
+
+
 module.exports = router;

@@ -23,6 +23,17 @@ const getUsuarios = async (req,res)=>{
     })
 }
 
+const getAllUsuarios = async(req, res = response) => {
+
+    const usuarios = await Usuario.find(); 
+    
+    res.json({
+        ok: true,
+        usuarios
+    })
+
+}
+
 const crearUsuarios = async (req, res = response)=>{
 
     const {
@@ -41,7 +52,7 @@ const crearUsuarios = async (req, res = response)=>{
         //encriptar password
         const salt = bcrypt.genSaltSync();
         usuario.password = bcrypt.hashSync(password, salt);
-
+        //todo realizar cambio de password
         // guardar usuario
         await usuario.save();
 
@@ -143,9 +154,31 @@ const borrarUsuario = async(req, res = response) =>{
     
 }
 
+const getUsuarioById = async(req, res = response) => {
+
+    const id = req.params.id;
+    try {    
+        const usuarios = await Usuario.findById(id); 
+        res.json({
+            ok: true,
+            usuarios
+        })
+
+    } catch (error) {
+        console.error(error);
+        res.json({
+            ok: true,
+            msg: 'error en actualizar'
+        })
+    }
+
+}
+
 module.exports = {
     getUsuarios,
     crearUsuarios,
     actualizarUsuarios,
     borrarUsuario,
+    getUsuarioById,
+    getAllUsuarios
 }

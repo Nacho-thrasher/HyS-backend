@@ -103,9 +103,31 @@ const borrarEmpresas = async(req, res = response) => {
     })
     
 }
+
+const getEmpresaById = async(req, res = response) => {
+
+    const id = req.params.id;
+    try {    
+        const empresas = await Empresa.findById(id); 
+        res.json({
+            ok: true,
+            empresas
+        })
+
+    } catch (error) {
+        console.error(error);
+        res.json({
+            ok: true,
+            msg: 'error en actualizar'
+        })
+    }
+
+}
+
 module.exports = {
     getEmpresas,
     crearEmpresas,
     actualizarEmpresas,
     borrarEmpresas,
+    getEmpresaById
 }

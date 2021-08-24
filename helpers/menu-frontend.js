@@ -2,46 +2,47 @@ const getMenuFrontEnd = (role = 'USER_ROLE') =>{
     const menu = [
         {
           titulo: 'Principal',
-          icono: 'mdi mdi-gauge',
+          icono: 'mdi mdi-view-dashboard',
           subMenu: [
             {
+              titulo: 'Inicio',
+              url: '/dashboard'
+            },
+            {
               titulo: 'Empresas',
-              url: '/'
+              url: 'vista-empresas'
             },
-            {
-              titulo: 'Extintores',
-              url: 'progress'
-            },
-            {
-              titulo: 'Usuarios',
-              url: 'grafica1'
-            },
-            {
-              titulo: 'Promesas',
-              url: 'promesas'
-            },
-            {
-              titulo: 'Rxjs',
-              url: 'rxjs'
-            }
+            // {
+            //   titulo: 'Extintores',
+            //   url: 'progress'
+            // }
+            // {
+            //   titulo: 'Others',
+            //   url: 'progress'
+            // },
+            // {
+            //   titulo: 'Promesas',
+            //   url: 'promesas'
+            // },
+            // {
+            //   titulo: 'Rxjs',
+            //   url: 'rxjs'
+            // }
           ]
-        },
+        }
+
+    ];
+
+    if (role === 'ADMIN_ROLE') {
+      menu.unshift(
         {
           titulo: 'Mantenimiento',
           icono: 'mdi mdi-folder-lock-open',
           subMenu: [
             {
-              titulo: 'Planillas',
-              url: '/'
+              titulo: 'Usuarios',
+              url: 'usuarios'
             },
-            {
-              titulo: 'Imprtaciones',
-              url: 'progress'
-            },
-            // {
-            //   titulo: 'Usuarios',
-            //   url: 'usuarios'
-            // },
             {
               titulo: 'Empresas',
               url: 'empresas'
@@ -52,16 +53,12 @@ const getMenuFrontEnd = (role = 'USER_ROLE') =>{
             }
           ]
         }
-      ];
+      )
 
-      if (role === 'ADMIN_ROLE') {
-        menu[1].subMenu.unshift({
-            titulo: 'Usuarios',
-            url: 'usuarios'
-        })
-      }
 
-      return menu;
+    }
+
+    return menu;
 }
 
 module.exports = {

@@ -35,7 +35,7 @@ const getColeccion = async(req, res = response) => {
 
     switch (tabla) {
         case 'extintores':
-            data = await Extintor.find({ numeroSerie: regexp})    
+            data = await Extintor.find({ numeroSerie: regexp })    
             .populate('empresa', 'nombre')
             .populate('usuario', 'nombre');
 

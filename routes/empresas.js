@@ -8,7 +8,8 @@ const {
     getEmpresas,
     crearEmpresas,
     actualizarEmpresas,
-    borrarEmpresas } = require('../controllers/empresas.controller');
+    borrarEmpresas,
+    getEmpresaById } = require('../controllers/empresas.controller');
 
 const router = Router();
 
@@ -32,6 +33,10 @@ router.put( '/:id',
     ],
     actualizarEmpresas 
 );
+
+//obtener 1 usuario
+router.get( '/:id',  getEmpresaById);
+
 //borrar usuario
 router.delete( '/:id', validarJWT, borrarEmpresas);
 

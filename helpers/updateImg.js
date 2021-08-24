@@ -50,8 +50,58 @@ const updateImage = async(tipo, id, nombreAr )=>{
             }
             pathViejo = `./uploads/extintores/${extintor.img}`;    
             borrarImg(pathViejo);
-            
+
             extintor.img = nombreAr;
+            
+            await extintor.save();
+            return true;
+        
+            break;
+    }    
+
+}
+const updateImage2 = async(tipo, id, nombreAr )=>{
+
+    let pathViejo = '';
+    switch (tipo) {
+        case 'usuarios':
+            const usuario = await Usuario.findById(id);
+            if(!usuario){
+                return false;
+            }
+            pathViejo = `./uploads/usuarios/${usuario.img}`;    
+            borrarImg(pathViejo);
+            
+            usuario.img2 = nombreAr;
+            await usuario.save();
+            return true;
+
+            break;
+        
+        case 'empresas':
+            const empresa = await Empresa.findById(id);
+            if(!empresa){
+                return false;
+            }
+            pathViejo = `./uploads/empresas/${empresa.img}`;    
+            borrarImg(pathViejo);
+            
+            empresa.img2 = nombreAr;
+            await empresa.save();
+            return true;
+        
+            break;
+        
+        case 'extintores':
+            const extintor = await Extintor.findById(id);
+            if(!extintor){
+                return false;
+            }
+            pathViejo = `./uploads/extintores/${extintor.img2}`;    
+            borrarImg(pathViejo);
+
+            extintor.img2 = nombreAr;
+            
             await extintor.save();
             return true;
         
@@ -62,4 +112,5 @@ const updateImage = async(tipo, id, nombreAr )=>{
 
 module.exports = {
     updateImage,
+    updateImage2
 }
