@@ -83,20 +83,21 @@ const actualizarUsuarios = async (req, res = response) => {
     const uid = req.params.id;
     try {
         //todo validar token y comprobars si es usuario corr
-       
+        // busco mi usuario por id para comparar
         const usuarioDb = await Usuario.findById(uid)
-
+        // existe ?
         if(!usuarioDb){
             return res.status(404).json({
                 ok: false, 
                 msg: 'no existe usuario para este id'
             })
         }
-        //actualizacion, destructuracion
-        const { password, google, email, ...campos} = req.body;
-        
+        //actualizacion, destructuracion de campos q mande front 
+        // aqui los campos q no quiero mandar antes desp los q mando
+        const { google, email, ...campos} = req.body;
+        // si el email no coincide con el q mande no entra        
         if(usuarioDb.email !== email){
-           
+            
             const existeEmail = await Usuario.findOne({email})
             if(existeEmail){
                 return res.status(400).json({
@@ -115,11 +116,17 @@ const actualizarUsuarios = async (req, res = response) => {
                 msg: 'usuario de google no puede cambiar su correo'
             })
         }
+        //encriptar password
+        const salt = bcrypt.genSaltSync();
+        campos.password = bcrypt.hashSync(campos.password, salt);
+        
+        //todo realizar cambio de password
         const usuarioActualizado = await Usuario.findByIdAndUpdate(uid, campos, {new: true });
         
         res.json({
             ok: true,
             usuarioActualizado
+
         })
 
     } catch (error) {

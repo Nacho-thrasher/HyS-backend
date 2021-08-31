@@ -4,7 +4,8 @@ const Extintor = require('../models/extintor');
 const getExtintores = async(req, res = response) => {
 
     const extintores = await Extintor.find()
-    .populate('empresa usuario', 'nombre'); 
+    .populate('empresa', 'nombre nroExtintores')
+    .populate('usuario', 'nombre'); 
     res.json({
         ok: true,
         extintores
@@ -17,13 +18,25 @@ const crearExtintores = async(req, res = response) => {
     const extintor = new Extintor({
         usuario: uid,
         ...req.body,
-    }) 
+    })
+    
+    const extintorId = await Extintor.find({ numeroSerie: req.body.numeroSerie })
+    .populate('empresa usuario', 'nombre img'); 
 
+    const extintorCompr = extintorId[0];
+    if(extintorCompr){
+        res.json({
+            ok: false,
+            msg: 'error ya existe este extintor'
+        })
+    }
+    
     try {
         const extintorDB = await extintor.save();
         res.json({
             ok: true,
             extintor: extintorDB,
+            numS: req.body.numeroSerie
         })   
     } catch (error) {
         res.status(500).json({
@@ -66,13 +79,28 @@ const actualizarExtintores = async(req, res = response) => {
     }
     
 }
-const borrarExtintores = (req, res = response) => {
+const borrarExtintores = async(req, res = response) => {
 
-    res.json({
-        ok: true,
-        msg: 'borrarExtintores'
-    })
-    
+    const id = req.params.id;
+    try {
+        const extintores = await Extintor.findById(id);
+        if(!extintores){
+            return res.status(404).json({
+                ok: false, 
+                msg: 'no existe extintor para este id',
+                id
+            })
+        }
+
+        await Extintor.findByIdAndDelete(id);
+
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({
+            ok: false,
+            msg: 'error intentar eliminar'
+        })
+    }
 }
 
 const getExtintorById = async(req, res = response) => {
