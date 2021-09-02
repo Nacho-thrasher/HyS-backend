@@ -7,7 +7,8 @@ const getExtintorByNumSerie = async(req, res = response) => {
     const numS = req.params.numSerie;
     try {
         const extintores = await Extintor.find({ numeroSerie: numS })
-        .populate('empresa usuario', 'nombre img'); 
+        .populate('empresa', 'nombre nroExtintores direccion localidad img')
+        .populate('usuario', 'nombre img'); 
         
         const extintor = extintores[0];
 

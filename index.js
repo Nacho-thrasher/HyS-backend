@@ -1,10 +1,11 @@
 require('dotenv').config();
 const path = require('path');
-
+//express
 const express = require('express');
 const { dbConnection } = require('./database/config');
 const cors = require('cors')
-
+//imgs 
+const multer = require('multer');
 //crear serv de express
 const app = express();
 
@@ -33,13 +34,12 @@ app.use('/api/extintores_excel', require('./routes/extintores'));
 app.use('/api/extintor', require('./routes/extintores'));
 app.use('/api/login', require('./routes/auth'));
 app.use('/api/todo', require('./routes/busquedas'));
-app.use('/api/upload', require('./routes/uploads'));
-app.use('/api/upload2', require('./routes/uploads2'));
-
 //pincipal
 app.use('/api/vista-empresas', require('./routes/vista-empresas'));
 app.use('/api/vista-extintor', require('./routes/vista-extintor'));
-
+//cloudinary imgs
+app.use('/api/cloudinary', require('./routes/cloudinary'));
+app.use('/api/cloudinary2', require('./routes/cloudinary2'));
 
 // lo ultimo 
 app.get('*', (req, res) => {

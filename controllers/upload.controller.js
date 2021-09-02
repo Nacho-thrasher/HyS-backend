@@ -3,14 +3,23 @@ const fs = require('fs');
 
 const { response } = require("express");
 const { v4: uuidv4 } = require('uuid');
-const { updateImage, updateImage2 } = require("../helpers/updateImg");
+const { updateImgCloudinary, updateImgCloudinary2 } = require("../helpers/updateImg");
+//const cloudinary = require('cloudinary');
+const cloudinary = require('cloudinary').v2;
 
-
-const fileUpload = (req, res= response) => {
-
+//todo SETTING CLOUDINARY
+cloudinary.config({ 
+    cloud_name: process.env.CLOUD_NAME, 
+    api_key: process.env.API_KEY,  
+    api_secret: process.env.API_SECRET,  
+    shorten: true,
+    secure: true
+});
+const UploadCloud = async(req, res= response) => {
+    //*0 EXTRAER PARAMS
     const tipo = req.params.tipo;
     const id = req.params.id;
-
+    //*1 validar tipo
     const tiposValidos = ['empresas', 'extintores', 'usuarios'];
     if(!tiposValidos.includes(tipo)) {
         res.status(400).json({
@@ -18,21 +27,18 @@ const fileUpload = (req, res= response) => {
             msg: 'no es empresa, extintores, usuarios'
         })
     }
-
-    //existe un archivo
+    //*2 existe un archivo
     if (!req.files || Object.keys(req.files).length === 0) {
         return res.status(400).json({
             ok: false,
             msg: 'no hay ningun archivo'
         });
     }
-
-    //procesar archivo o imagen
+    //*3 procesar archivo o imagen
     const file = req.files.img;
     const nombreCortado = file.name.split('.') // .jpg
     const extensionArchivo = nombreCortado[nombreCortado.length -1];
-
-    //validar extensionArchivo
+    //*4 validar extensionArchivo
     const extensionesValidas = ['png', 'jpg', 'jpeg'];
     if(!extensionesValidas.includes(extensionArchivo)){
         return res.status(400).json({
@@ -40,39 +46,39 @@ const fileUpload = (req, res= response) => {
             msg: 'no hay extension valida'
         });
     }
-
-    //generar nombre
-    const nombreAr = `${uuidv4()}.${extensionArchivo}`;
-
-    //crear path donde guardar img
-    const path = `./uploads/${tipo}/${nombreAr}`;
-
-    //mover la imagen
-    file.mv(path, (err) =>{
-        if (err){
-            console.log(err)
-            return res.status(500).json({
-                ok: false,
-                msg: 'error al mover img'
-            })
-        }
-
-        // actualizar base de datos
-        updateImage(tipo, id, nombreAr );
-
+    //*5 generar nombre
+    //const nombreAr = `${uuidv4()}.${extensionArchivo}`;
+    //*6 crear path donde guardar img
+    //const path = `./uploads/${tipo}/${nombreAr}`;
+    //*7 mover la imagen A CLOUDINARY
+    try {
+        //console.log(file);
+        const result =  await cloudinary.uploader.upload(file.tempFilePath, 
+        {
+            folder: tipo,
+            width: 864, height: 576, crop: "scale",
+            public_id: `${Date.now()}`, 
+            resource_type: "auto"
+        })
+        //const nombreAr = result.public_id;
+        const nombreAr = result.secure_url;
+        updateImgCloudinary(tipo, id, nombreAr);
         res.json({
             ok: true,
-            msg: 'archivos subido',
             nombreAr
-        })
-    });
-
+        })     
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ err: 'Algo salio mal' });
+    }
+    //* end //////////////////////////////////////////////////////////
 }
-const fileUpload2 = (req, res= response) => {
-
+//todo upload cloudinary2
+const UploadCloud2 = async(req, res= response) => {
+    //*0 EXTRAER PARAMS
     const tipo = req.params.tipo;
     const id = req.params.id;
-
+    //*1 validar tipo
     const tiposValidos = ['empresas', 'extintores', 'usuarios'];
     if(!tiposValidos.includes(tipo)) {
         res.status(400).json({
@@ -80,8 +86,7 @@ const fileUpload2 = (req, res= response) => {
             msg: 'no es empresa, extintores, usuarios'
         })
     }
-
-    //existe un archivo
+    //*2 existe un archivo
     if (!req.files || Object.keys(req.files).length === 0) {
         return res.status(400).json({
             ok: false,
@@ -89,12 +94,11 @@ const fileUpload2 = (req, res= response) => {
         });
     }
 
-    //procesar archivo o imagen
+    //*3 procesar archivo o imagen
     const file = req.files.img2;
     const nombreCortado = file.name.split('.') // .jpg
     const extensionArchivo = nombreCortado[nombreCortado.length -1];
-
-    //validar extensionArchivo
+    //*4 validar extensionArchivo
     const extensionesValidas = ['png', 'jpg', 'jpeg'];
     if(!extensionesValidas.includes(extensionArchivo)){
         return res.status(400).json({
@@ -102,33 +106,32 @@ const fileUpload2 = (req, res= response) => {
             msg: 'no hay extension valida'
         });
     }
-
-    //generar nombre
-    const nombreAr = `${uuidv4()}.${extensionArchivo}`;
-
-    //crear path donde guardar img
-    const path = `./uploads/${tipo}/${nombreAr}`;
-
-    //mover la imagen
-    file.mv(path, (err) =>{
-        if (err){
-            console.log(err)
-            return res.status(500).json({
-                ok: false,
-                msg: 'error al mover img'
-            })
-        }
-
-        // actualizar base de datos
-        updateImage2(tipo, id, nombreAr );
-
+    //*5 generar nombre
+    //const nombreAr = `${uuidv4()}.${extensionArchivo}`;
+    //*6 crear path donde guardar img
+    //const path = `./uploads/${tipo}/${nombreAr}`;
+    //*7 mover la imagen A CLOUDINARY
+    try {
+        //console.log(file);
+        const result =  await cloudinary.uploader.upload(file.tempFilePath, 
+        {
+            folder: tipo,
+            width: 864, height: 576, crop: "scale",
+            public_id: `${Date.now()}`, 
+            resource_type: "auto"
+        })
+        //const nombreAr = result.public_id;
+        const nombreAr = result.secure_url;
+        updateImgCloudinary2(tipo, id, nombreAr);
         res.json({
             ok: true,
-            msg: 'archivos subido',
             nombreAr
-        })
-    });
-
+        })     
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ err: 'Algo salio mal' });
+    }
+    //* end //////////////////////////////////////////////////////////
 }
 const retornaImg = (req, res = response) =>{
     const tipo = req.params.tipo;
@@ -144,12 +147,32 @@ const retornaImg = (req, res = response) =>{
         const pathImg = path.join(__dirname, `../uploads/no_imagen.png`);
         res.sendFile(pathImg)
     }
-    
-
+}
+const retornaImgCloudinary = (req, res = response) =>{
+    const tipo = req.params.tipo;
+    const foto = req.params.foto;
+    const public_id = `${tipo}/${foto}`;
+    //console.log(public_id);
+    cloudinary.search
+    .expression(public_id)
+    .execute().then(result=>{
+        if (result.total_count === 0) {
+            const pathImg = path.join(__dirname, `../uploads/no_imagen.png`);
+            res.sendFile(pathImg)      
+        }
+        else{
+            //console.log(result.resources[0].url)
+            res.json({
+                ok: true,
+                img: result.resources[0].url
+            })
+        }
+    });        
 }
 
 module.exports = {
-    fileUpload,
     retornaImg,
-    fileUpload2
+    UploadCloud,
+    UploadCloud2,
+    retornaImgCloudinary
 }
