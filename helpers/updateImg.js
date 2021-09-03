@@ -128,8 +128,60 @@ const updateImgCloudinary2 = async(tipo, id, nombreAr)=>{
             break;
     }    
 }
+//updateImgCloudinaryPDF
+const updateImgCloudinaryPDF = async(tipo, id, nombreAr)=>{
+    let pathViejo = '';
+    //*0 Buscar imagen en database para el usuario
+    switch (tipo) {
+        case 'usuarios':
+            const usuario = await Usuario.findById(id);
+            if(!usuario){
+                return false;
+            }
+            if(usuario.pdf != undefined){
+                pathViejo = `${usuario.pdf}`;    
+                deleteImgCloudinary(pathViejo);
+            }
 
+            usuario.pdf = nombreAr;
+            await usuario.save();
+            return true;
+
+            break; 
+        
+        case 'empresas':
+            const empresa = await Empresa.findById(id);
+            if(!empresa){
+                return false;
+            }
+            if(empresa.pdf != undefined){
+                pathViejo = `${empresa.pdf}`;    
+                deleteImgCloudinary(pathViejo);
+            }
+            empresa.pdf = nombreAr;
+            await empresa.save();
+            return true;
+        
+            break;
+        
+        case 'extintores':
+            const extintor = await Extintor.findById(id);
+            if(!extintor){
+                return false;
+            }
+            if(extintor.pdf != undefined){
+                pathViejo = `${extintor.pdf}`;    
+                deleteImgCloudinary(pathViejo);
+            }
+            extintor.pdf = nombreAr;
+            await extintor.save();
+            return true;
+        
+            break;
+    }    
+}
 module.exports = {
     updateImgCloudinary,
-    updateImgCloudinary2
+    updateImgCloudinary2,
+    updateImgCloudinaryPDF
 }

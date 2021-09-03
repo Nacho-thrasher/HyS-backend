@@ -40,7 +40,7 @@ app.use('/api/vista-extintor', require('./routes/vista-extintor'));
 //cloudinary imgs
 app.use('/api/cloudinary', require('./routes/cloudinary'));
 app.use('/api/cloudinary2', require('./routes/cloudinary2'));
-
+app.use('/api/cloudinaryPdf', require('./routes/cloudinaryPdf'));
 // lo ultimo 
 app.get('*', (req, res) => {
     res.sendFile(path.resolve(__dirname, 'public/index.html'));

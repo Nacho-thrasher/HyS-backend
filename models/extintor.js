@@ -159,6 +159,12 @@ const ExtintorSchema = Schema({
     observacion:{
         type: String,
     },
+    cliente:{
+        type: String,
+    },
+    pdf:{
+        type: String,
+    },
     //*referencia a empresa
     empresa: {
         type: Schema.Types.ObjectId,

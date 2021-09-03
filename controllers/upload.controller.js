@@ -3,7 +3,7 @@ const fs = require('fs');
 
 const { response } = require("express");
 const { v4: uuidv4 } = require('uuid');
-const { updateImgCloudinary, updateImgCloudinary2 } = require("../helpers/updateImg");
+const { updateImgCloudinary, updateImgCloudinary2, updateImgCloudinaryPDF } = require("../helpers/updateImg");
 //const cloudinary = require('cloudinary');
 const cloudinary = require('cloudinary').v2;
 
@@ -133,6 +133,63 @@ const UploadCloud2 = async(req, res= response) => {
     }
     //* end //////////////////////////////////////////////////////////
 }
+//todo PDF INSERT
+const UploadCloudPdf = async(req, res= response) => {
+    //*0 EXTRAER PARAMS
+    const tipo = req.params.tipo;
+    const id = req.params.id;
+    //*1 validar tipo
+    const tiposValidos = ['empresas', 'extintores', 'usuarios'];
+    if(!tiposValidos.includes(tipo)) {
+        res.status(400).json({
+            ok: false,
+            msg: 'no es empresa, extintores o usuarios'
+        })
+    }
+    //*2 existe un archivo
+    if (!req.files || Object.keys(req.files).length === 0) {
+        return res.status(400).json({
+            ok: false,
+            msg: 'no hay ningun archivo'
+        });
+    }
+    //*3 procesar archivo o imagen
+    const file = req.files.pdf;
+    const nombreCortado = file.name.split('.') // .jpg
+    const extensionArchivo = nombreCortado[nombreCortado.length -1];
+    //*4 validar extensionArchivo
+    const extensionesValidas = ['png', 'jpg', 'jpeg', 'pdf'];
+    if(!extensionesValidas.includes(extensionArchivo)){
+        return res.status(400).json({
+            ok: false,
+            msg: 'no hay extension valida'
+        });
+    }
+    //*5 generar nombre
+    //const nombreAr = `${uuidv4()}.${extensionArchivo}`;
+    //*6 crear path donde guardar img
+    //const path = `./uploads/${tipo}/${nombreAr}`;
+    //*7 mover la imagen A CLOUDINARY
+    try {
+        const result = await cloudinary.uploader.upload(file.tempFilePath, 
+        { 
+            folder: tipo, 
+            public_id: `${Date.now()}`, 
+            resource_type: "auto"
+        });
+        //console.log(result);
+        const nombreAr = result.secure_url;
+        updateImgCloudinaryPDF(tipo, id, nombreAr);
+        res.json({
+            ok: true,
+            nombreAr
+        })     
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ err: 'Algo salio mal' });
+    }
+    //* end //////////////////////////////////////////////////////////
+}
 const retornaImg = (req, res = response) =>{
     const tipo = req.params.tipo;
     const foto = req.params.foto;
@@ -169,10 +226,10 @@ const retornaImgCloudinary = (req, res = response) =>{
         }
     });        
 }
-
 module.exports = {
     retornaImg,
     UploadCloud,
     UploadCloud2,
-    retornaImgCloudinary
+    retornaImgCloudinary,
+    UploadCloudPdf
 }
