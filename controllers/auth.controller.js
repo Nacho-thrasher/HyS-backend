@@ -9,17 +9,15 @@ const login = async (req, res = response) =>{
     
     const {email, password} = req.body;
     try {
-        //VERIFICAR EMAIL
+        //*1 VERIFICAR EMAIL
         const usuarioDB = await Usuario.findOne({email});
-
         if(!usuarioDB){
             return res.status(404).json({
                 ok: false,
                 msg: 'email no validos'
             })
         }
-        
-        // CONTRASENIA
+        //*2 CONTRASENIA
         const validPassword = bcrypt.compareSync(password, usuarioDB.password)
         if(!validPassword){
             return res.status(400).json({
@@ -27,9 +25,8 @@ const login = async (req, res = response) =>{
                 msg: 'contrasenia no valida'
             })
         }
-        //GENERAR TOKEN
+        //*3 GENERAR TOKEN
         const token = await generarJWT(usuarioDB.id);
-
         res.json({
             ok: true,
             token,
@@ -48,7 +45,6 @@ const login = async (req, res = response) =>{
 const googleSignIn = async(req, res = response)=>{
     
     const googleToken = req.body.token;
-
     try {
         
         const {name, email, picture} = await googleVerify(googleToken);

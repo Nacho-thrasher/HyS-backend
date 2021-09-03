@@ -55,10 +55,8 @@ const crearUsuarios = async (req, res = response)=>{
         //todo realizar cambio de password
         // guardar usuario
         await usuario.save();
-
         //GENERAR TOKEN
         const token = await generarJWT(usuario.id);
-
         res.json({
             ok: true,
             usuario,
@@ -74,8 +72,6 @@ const crearUsuarios = async (req, res = response)=>{
         })
 
     }
-
-    
 }
 
 const actualizarUsuarios = async (req, res = response) => {
