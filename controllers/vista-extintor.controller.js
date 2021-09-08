@@ -24,10 +24,30 @@ const getExtintorByNumSerie = async(req, res = response) => {
           msg: "no existe extintor",
         });
     }
-
 }
+const getExtintorByIdExt = async(req, res = response) => {
 
+    const id = req.params.id_ext;
+    //split obtener id
+    try {
+        const extintor = await Extintor.findById(id)
+        .populate('empresa', 'nombre nroExtintores direccion localidad img')
+        .populate('usuario', 'nombre img');  
+        res.json({
+            ok: true,
+            extintor
+        })
+        
+    } catch (error) {
+        console.error(error);
+        res.json({
+            ok: false,
+            msg: 'error no existe extintor'
+        })
+    }    
+}
 
 module.exports = {
     getExtintorByNumSerie,
+    getExtintorByIdExt
 };

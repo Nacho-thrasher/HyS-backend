@@ -11,7 +11,7 @@ const router = Router();
 router.get( '/', getVistaEmpresas )
 
 //obtener extintores por empresa
-router.get( '/:id', validarJWT, getExtintoresByEmpresa);
+router.get( '/:id', getExtintoresByEmpresa);
 
 
 module.exports = router;

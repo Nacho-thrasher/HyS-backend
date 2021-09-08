@@ -24,7 +24,12 @@ const crearExtintores = async(req, res = response) => {
     .populate('empresa usuario', 'nombre img'); 
 
     const extintorCompr = extintorId[0];
-    if(extintorCompr){
+    if( extintorCompr.numeroSerie == req.body.numeroSerie && 
+        extintorCompr.agenteExtintor == req.body.agenteExtintor &&
+        extintorCompr.capacidad == req.body.capacidad &&
+        extintorCompr.marca == req.body.marca
+    ){
+        //console.log(extintorCompr)
         res.json({
             ok: false,
             msg: 'error ya existe este extintor'
@@ -123,6 +128,7 @@ const getExtintorById = async(req, res = response) => {
             msg: 'error en actualizar'
         })
     }
+    
 
 }
 

@@ -4,8 +4,7 @@ const ExtintorSchema = Schema({
     //identicacion
     numeroSerie: {
         type: String,
-        require: true,
-        unique: true,
+        require: true
     },
     agenteExtintor: {
         //tipo
@@ -185,3 +184,4 @@ ExtintorSchema.method('toJSON', function(){
 })
 
 module.exports = model('Extintor', ExtintorSchema);
+

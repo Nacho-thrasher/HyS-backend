@@ -37,6 +37,8 @@ app.use('/api/todo', require('./routes/busquedas'));
 //pincipal
 app.use('/api/vista-empresas', require('./routes/vista-empresas'));
 app.use('/api/vista-extintor', require('./routes/vista-extintor'));
+//comprobar ext
+app.use('/api/ifExist', require('./routes/ifExist'));
 //cloudinary imgs
 app.use('/api/cloudinary', require('./routes/cloudinary'));
 app.use('/api/cloudinary2', require('./routes/cloudinary2'));

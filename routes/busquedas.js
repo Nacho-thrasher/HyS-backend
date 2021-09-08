@@ -6,9 +6,9 @@ const { validarJWT } = require('../middlewares/validatJWT');
 const router = Router();
 
 router.get('/:busqueda', 
-    [
-        validarJWT
-    ], 
+    // [
+    //     validarJWT
+    // ], 
     getTodo
 );
 router.get('/coleccion/:tabla/:busqueda', 
@@ -17,7 +17,5 @@ router.get('/coleccion/:tabla/:busqueda',
     ], 
     getColeccion
 );
-
-
 
 module.exports = router;
