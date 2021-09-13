@@ -51,15 +51,25 @@ const UploadCloud = async(req, res= response) => {
     //*6 crear path donde guardar img
     //const path = `./uploads/${tipo}/${nombreAr}`;
     //*7 mover la imagen A CLOUDINARY
+    let result;
     try {
-        //console.log(file);
-        const result =  await cloudinary.uploader.upload(file.tempFilePath, 
-        {
-            folder: tipo,
-            width: 864, height: 576, crop: "scale",
-            public_id: `${Date.now()}`, 
-            resource_type: "auto"
-        })
+        if (tipo === 'usuarios') {
+            result =  await cloudinary.uploader.upload(file.tempFilePath, 
+            {
+                folder: tipo,
+                public_id: `${Date.now()}`, 
+                resource_type: "auto"
+            })
+        }
+        else{
+            result =  await cloudinary.uploader.upload(file.tempFilePath, 
+            {
+                folder: tipo,
+                width: 864, height: 576, crop: "scale",
+                public_id: `${Date.now()}`, 
+                resource_type: "auto"
+            })
+        }
         //const nombreAr = result.public_id;
         const nombreAr = result.secure_url;
         updateImgCloudinary(tipo, id, nombreAr);
