@@ -43,6 +43,8 @@ app.use('/api/ifExist', require('./routes/ifExist'));
 app.use('/api/cloudinary', require('./routes/cloudinary'));
 app.use('/api/cloudinary2', require('./routes/cloudinary2'));
 app.use('/api/cloudinaryPdf', require('./routes/cloudinaryPdf'));
+//crud users adm
+app.use('/api/usuariosAdm', require('./routes/usuariosAdm'));
 // lo ultimo 
 app.get('*', (req, res) => {
     res.sendFile(path.resolve(__dirname, 'public/index.html'));
