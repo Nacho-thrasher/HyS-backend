@@ -1,21 +1,26 @@
 const { Schema, model } = require('mongoose');
 
 const ExtintorSchema = Schema({
-    //identicacion
+    //todo importante
     numeroSerie: {
         type: String,
         require: true
     },
+    //? id ext sigex para el qr y modificar crudd
+    identificadorSysExt: {
+        //elemento id
+        type: String,
+        require: true
+    },
     agenteExtintor: {
-        //tipo
         type: String,
         require: true,
-        //unique: true
     },
     capacidad: {
         type: String,
         require: true,
     },
+    //todo fin importante
     marca: {
         type: String,
         require: true
@@ -29,12 +34,29 @@ const ExtintorSchema = Schema({
         type: String,
         require: true,
     },
+    //* otros inicio
+    fuph:{
+        type: String,
+        require: true,
+    },
+    vtoCarga:{
+        type: String,
+        require: true,
+    },
     vtoPh: {
         //fecha
         type: String,
         require: true,
     },
-    //*==
+    ff: {
+        type: String,
+        require: true,
+    },
+    sucursal: {
+        type: String,
+        require: true,
+    },
+    //* fin otros
     reposiciones: {
         //fecha
         type: String,

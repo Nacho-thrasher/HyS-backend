@@ -20,21 +20,7 @@ const crearExtintores = async(req, res = response) => {
         ...req.body,
     })
     
-    const extintorId = await Extintor.find({ numeroSerie: req.body.numeroSerie })
-    .populate('empresa usuario', 'nombre img'); 
-
-    const extintorCompr = extintorId[0];
-    if( extintorCompr.numeroSerie == req.body.numeroSerie && 
-        extintorCompr.agenteExtintor == req.body.agenteExtintor &&
-        extintorCompr.capacidad == req.body.capacidad &&
-        extintorCompr.marca == req.body.marca
-    ){
-        //console.log(extintorCompr)
-        res.json({
-            ok: false,
-            msg: 'error ya existe este extintor'
-        })
-    }
+    
     
     try {
         const extintorDB = await extintor.save();
@@ -122,14 +108,12 @@ const getExtintorById = async(req, res = response) => {
         })
 
     } catch (error) {
-        console.error(error);
         res.json({
-            ok: true,
-            msg: 'error en actualizar'
+            ok: false,
+            msg: 'error no se encontro Extintor'
         })
     }
     
-
 }
 
 module.exports = {

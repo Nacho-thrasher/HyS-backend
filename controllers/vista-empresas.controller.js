@@ -31,9 +31,8 @@ const getExtintoresByEmpresa = async (req, res = response) => {
       extintores,
     });
   } catch (error) {
-    console.error(error);
     res.json({
-      ok: true,
+      ok: false,
       msg: "no existe empresa",
     });
   }

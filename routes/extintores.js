@@ -20,6 +20,7 @@ router.post('/',
     [
         validarJWT,
         check('numeroSerie','El numero de Serie es necesario').not().isEmpty(),
+        //check('identificadorSysExt','El identificador externo es necesario').not().isEmpty(),
         check('empresa','El id de empresa debe ser valido').isMongoId(),
         validarCampos,
     ], 

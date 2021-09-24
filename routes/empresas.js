@@ -9,7 +9,8 @@ const {
     crearEmpresas,
     actualizarEmpresas,
     borrarEmpresas,
-    getEmpresaById } = require('../controllers/empresas.controller');
+    getEmpresaById,
+    getEmpresaByNombre } = require('../controllers/empresas.controller');
 
 const router = Router();
 

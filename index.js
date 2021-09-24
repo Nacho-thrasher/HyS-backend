@@ -45,10 +45,13 @@ app.use('/api/cloudinary2', require('./routes/cloudinary2'));
 app.use('/api/cloudinaryPdf', require('./routes/cloudinaryPdf'));
 //crud users adm
 app.use('/api/usuariosAdm', require('./routes/usuariosAdm'));
+//devolver id empresa
+app.use('/api/empresaNombre', require('./routes/empresaNombre'));
 // lo ultimo 
 app.get('*', (req, res) => {
     res.sendFile(path.resolve(__dirname, 'public/index.html'));
 })
+
 
 app.listen(process.env.PORT, ()=>{
     console.log('servidor corriendo en puerto'+ process.env.PORT)

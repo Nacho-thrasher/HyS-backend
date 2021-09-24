@@ -117,8 +117,30 @@ const getEmpresaById = async(req, res = response) => {
     } catch (error) {
         console.error(error);
         res.json({
-            ok: true,
+            ok: false,
             msg: 'error en actualizar'
+        })
+    }
+
+}
+
+const getEmpresaByNombre = async(req, res = response) => {
+
+    const nombreEmp = req.params.empresaNombre;
+    const empresaNoSpace = nombreEmp.replace(/_/g, " ");
+    try {    
+        const empresas = await Empresa.find({ nombre: empresaNoSpace });
+        const empresaId = empresas[0]._id;
+        res.json({
+            ok: true,
+            empresaId
+        })
+
+    } catch (error) {
+        console.error(error);
+        res.json({
+            ok: false,
+            msg: 'error en buscar empresa'
         })
     }
 
@@ -129,5 +151,6 @@ module.exports = {
     crearEmpresas,
     actualizarEmpresas,
     borrarEmpresas,
-    getEmpresaById
+    getEmpresaById,
+    getEmpresaByNombre
 }

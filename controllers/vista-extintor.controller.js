@@ -18,7 +18,6 @@ const getExtintorByNumSerie = async(req, res = response) => {
         })
 
     }  catch (error) {
-        console.error(error);
         res.json({
           ok: false,
           msg: "no existe extintor",
@@ -30,16 +29,17 @@ const getExtintorByIdExt = async(req, res = response) => {
     const id = req.params.id_ext;
     //split obtener id
     try {
-        const extintor = await Extintor.findById(id)
+        let extintor = await Extintor.find({ identificadorSysExt: id })
         .populate('empresa', 'nombre nroExtintores direccion localidad img')
-        .populate('usuario', 'nombre img');  
+        .populate('usuario', 'nombre img'); 
+         extintor = extintor[0];
         res.json({
             ok: true,
             extintor
         })
         
+        
     } catch (error) {
-        console.error(error);
         res.json({
             ok: false,
             msg: 'error no existe extintor'
