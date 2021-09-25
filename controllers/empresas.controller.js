@@ -73,7 +73,6 @@ const actualizarEmpresas = async(req, res = response) => {
 const borrarEmpresas = async(req, res = response) => {
 
     const id = req.params.id;
-
     try {
         const empresaDB = await Empresa.findById(id);
         if(!empresaDB){
@@ -81,27 +80,16 @@ const borrarEmpresas = async(req, res = response) => {
                 ok:false,
                 msg: 'empresa no encontrada'
             })    
-        }
-        
-        await empresaDB.findByIdAndDelete(id);
-
-        res.json({
-            ok: true,
-            msg: 'eliminado correctamente'
-        })
+        } 
+        await Empresa.findByIdAndDelete(id);
     } 
     catch (error) {
+        console.log(error);
         res.status(500).json({
             ok:false,
-            msg: 'error en actualizar'
+            msg: 'error en eliminar empresa'
         })
     }
-
-    res.json({
-        ok: true,
-        msg: 'borrarEmpresas'
-    })
-    
 }
 
 const getEmpresaById = async(req, res = response) => {

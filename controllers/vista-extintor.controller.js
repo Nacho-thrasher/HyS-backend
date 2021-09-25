@@ -47,7 +47,26 @@ const getExtintorByIdExt = async(req, res = response) => {
     }    
 }
 
+const verificar_repetido = async(req, res = response) => {
+
+    const id = req.params.id_ext;
+    try {
+        let extintor = await Extintor.find({ identificadorSysExt: id });
+        extintor = extintor[0].identificadorSysExt;
+        res.json({
+            ok: true,
+            extintor
+        })
+    } catch (error) {
+        res.json({
+            ok: false,
+            msg: 'error no existe extintor'
+        })
+    }    
+}
+
 module.exports = {
     getExtintorByNumSerie,
-    getExtintorByIdExt
+    getExtintorByIdExt,
+    verificar_repetido
 };

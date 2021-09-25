@@ -47,6 +47,8 @@ app.use('/api/cloudinaryPdf', require('./routes/cloudinaryPdf'));
 app.use('/api/usuariosAdm', require('./routes/usuariosAdm'));
 //devolver id empresa
 app.use('/api/empresaNombre', require('./routes/empresaNombre'));
+//verificar id externo repetido
+app.use('/api/verificar_repetido', require('./routes/verificar_repetido'));
 // lo ultimo 
 app.get('*', (req, res) => {
     res.sendFile(path.resolve(__dirname, 'public/index.html'));
