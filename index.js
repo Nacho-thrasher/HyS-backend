@@ -5,7 +5,7 @@ const express = require('express');
 const { dbConnection } = require('./database/config');
 const cors = require('cors')
 //imgs 
-const multer = require('multer');
+//const multer = require('multer');
 //crear serv de express
 const app = express();
 
