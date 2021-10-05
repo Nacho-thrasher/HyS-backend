@@ -13,7 +13,7 @@ const getTodo = async(req, res = response) => {
     const [ usuarios, empresas, extintores ] = await Promise.all([
         Usuario.find({ nombre: regexp }),
         Empresa.find({ nombre: regexp }),
-        Extintor.find({ numeroSerie: regexp})
+        Extintor.find({ numeroSerie: regexp}).populate('empresa', 'nombre')
         // *definir lo q quiero buscar aqui con populate wn
     ]);
 
