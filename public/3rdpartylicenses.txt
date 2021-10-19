@@ -209,6 +209,9 @@ MIT
 ngx-skeleton-loader
 MIT
 
+ngx-ui-loader
+MIT
+
 perf-marks
 MIT
 The MIT License (MIT)
