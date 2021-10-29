@@ -186,7 +186,34 @@ const ExtintorSchema = Schema({
     pdf:{
         type: String,
     },
-    //*referencia a empresa
+    //todo NUEVAS VARIABLES
+    equipo_usado_descargado:{
+        type: String,
+    },
+    equipo_despresurizado:{
+        type: String,
+    },
+    falta_tarjeta:{
+        type: String,
+    },
+    precinto:{
+        type: String,
+    },
+    altura:{
+        type: String,
+    },
+    senializacion_altura:{
+        type: String,
+    },
+    senializacion_chapa:{
+        type: String,
+    },
+    carro:{
+        type: String,
+    },
+    ruptura:{
+        type: String,
+    },
     empresa: {
         type: Schema.Types.ObjectId,
         ref: 'Empresa'
@@ -207,3 +234,4 @@ ExtintorSchema.method('toJSON', function(){
 
 module.exports = model('Extintor', ExtintorSchema);
 
+//----------------------------------------------------------------

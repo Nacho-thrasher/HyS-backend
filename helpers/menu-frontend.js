@@ -50,7 +50,11 @@ const getMenuFrontEnd = (role = 'USER_ROLE') =>{
             {
               titulo: 'Extintores',
               url: 'extintores'
-            }
+            },
+            // {
+            //   titulo: 'Actualizar Inspeccion',
+            //   url: 'actualizar_inspeccion'
+            // }
           ]
         }
       )

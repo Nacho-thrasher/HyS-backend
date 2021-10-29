@@ -49,6 +49,8 @@ app.use('/api/usuariosAdm', require('./routes/usuariosAdm'));
 app.use('/api/empresaNombre', require('./routes/empresaNombre'));
 //verificar id externo repetido
 app.use('/api/verificar_repetido', require('./routes/verificar_repetido'));
+//todo ACTUALIZAR INSPECCION
+app.use('/api/actualizar_inspeccion', require('./routes/actualizar_inspeccion'));
 // lo ultimo 
 app.get('*', (req, res) => {
     res.sendFile(path.resolve(__dirname, 'public/index.html'));
