@@ -32,7 +32,8 @@ const getExtintorByIdExt = async(req, res = response) => {
         let extintor = await Extintor.find({ identificadorSysExt: id })
         .populate('empresa', 'nombre nroExtintores direccion localidad img')
         .populate('usuario', 'nombre img'); 
-         extintor = extintor[0];
+        extintor = extintor[0];
+        //console.log(extintor._id)
         res.json({
             ok: true,
             extintor

@@ -51,10 +51,15 @@ const getMenuFrontEnd = (role = 'USER_ROLE') =>{
               titulo: 'Extintores',
               url: 'extintores'
             },
-            // {
-            //   titulo: 'Actualizar Inspeccion',
-            //   url: 'actualizar_inspeccion'
-            // }
+            //dashboard/extintores_excel
+            {
+              titulo: 'Importar Ext con Excel',
+              url: 'extintores_excel'
+            },
+            {
+              titulo: 'Actualizar Inspeccion',
+              url: 'actualizar_inspeccion'
+            }
           ]
         }
       )

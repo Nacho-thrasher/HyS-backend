@@ -187,7 +187,16 @@ const ExtintorSchema = Schema({
         type: String,
     },
     //todo NUEVAS VARIABLES
-    equipo_usado_descargado:{
+    fecha:{
+        //fecha inspeccion
+        type: String,
+    },
+    cumple:{
+        //estado de inspeccion si cumple o no
+        type: String,
+    },
+
+    equipo_usado:{
         type: String,
     },
     equipo_despresurizado:{
@@ -208,7 +217,7 @@ const ExtintorSchema = Schema({
     senializacion_chapa:{
         type: String,
     },
-    carro:{
+    carro_defectuoso:{
         type: String,
     },
     ruptura:{

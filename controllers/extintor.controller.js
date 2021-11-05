@@ -19,8 +19,7 @@ const crearExtintores = async(req, res = response) => {
         usuario: uid,
         ...req.body,
     })
-    
-    
+
     
     try {
         const extintorDB = await extintor.save();
@@ -116,10 +115,57 @@ const getExtintorById = async(req, res = response) => {
     
 }
 
+const actualizarInspeccion = async(req, res = response) => {
+
+    const nroSerie = req.params.nroSerie;
+    const uid = req.uid;
+
+    try {
+
+        let extintorDB = await Extintor.find({numeroSerie: nroSerie});
+        
+        //? existe?
+        if(!extintorDB){
+            return res.status(404).json({
+                ok:false,
+                msg: 'extintor no encontrado'
+            })    
+        }
+
+        extintorDB = extintorDB[0];
+        let idExt = extintorDB._id;
+
+        const cambiosExtintor = {
+            ...req.body,
+            usuario:  uid
+        }
+        
+        const extintorActualizado = await Extintor.findByIdAndUpdate(
+            idExt,
+            cambiosExtintor, 
+            {new: true}
+        );
+        
+        res.json({
+            ok: true,
+            extintorActualizado
+        })
+        
+    } 
+    catch (error) {
+        res.status(500).json({
+            ok:false,
+            msg: 'error en actualizar'
+        })
+    }
+    
+}
+
 module.exports = {
     getExtintores,
     crearExtintores,
     actualizarExtintores,
     borrarExtintores,
     getExtintorById,
+    actualizarInspeccion
 }
