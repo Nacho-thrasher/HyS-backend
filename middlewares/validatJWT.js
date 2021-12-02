@@ -4,14 +4,12 @@ const Usuario = require("../models/usuario");
 const validarJWT = (req, res, next) => {
     //leer headers
     const token = req.header('x-token');
-
     if(!token){
         return res.status(401).json({
             ok: false,
             msg: 'no hay token en peticion'
         })
     }
-
     try {
         const { uid } = jwt.verify(token, process.env.JWT_SECRET);
         req.uid = uid;
