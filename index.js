@@ -3,7 +3,7 @@ const path = require('path');
 //express
 const express = require('express');
 const { dbConnection } = require('./database/config');
-const cors = require('cors')
+const cors = require('cors') //# cors revisar
 //imgs 
 //const multer = require('multer');
 //crear serv de express
@@ -55,6 +55,7 @@ app.use('/api/actualizar_inspeccion', require('./routes/actualizar_inspeccion'))
 app.get('*', (req, res) => {
     res.sendFile(path.resolve(__dirname, 'public/index.html'));
 })
+
 
 app.listen(process.env.PORT, ()=>{
     console.log('servidor corriendo en puerto'+ process.env.PORT)
